@@ -1,87 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Explore Platform</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Explore</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: white;
-    }
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#0f172a;
+  color:white;
+}
 
-    .container {
-      max-width: 350px;
-      margin: 100px auto;
-      background: #111827;
-      padding: 20px;
-      border-radius: 10px;
-      text-align: center;
-    }
+.container{
+  max-width:400px;
+  margin:60px auto;
+  background:#111827;
+  padding:25px;
+  border-radius:10px;
+}
 
-    h1 {
-      margin-bottom: 20px;
-    }
+h1{
+  text-align:center;
+  margin-bottom:20px;
+}
 
-    input {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border-radius: 6px;
-      border: none;
-      outline: none;
-    }
+input{
+  width:100%;
+  padding:12px;
+  margin:8px 0;
+  border-radius:6px;
+  border:none;
+  outline:none;
+}
 
-    button {
-      width: 100%;
-      padding: 12px;
-      background: #2563eb;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
-    }
+button{
+  width:100%;
+  padding:12px;
+  background:#22c55e;
+  color:black;
+  border:none;
+  border-radius:6px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:10px;
+}
 
-    button:hover {
-      background: #1d4ed8;
-    }
+.link{
+  text-align:center;
+  margin-top:10px;
+  color:#38bdf8;
+  cursor:pointer;
+}
 
-    #dashboard {
-      display: none;
-      padding: 20px;
-    }
+.hidden{
+  display:none;
+}
 
-    .card {
-      background: #1f2933;
-      padding: 15px;
-      margin: 10px 0;
-      border-radius: 8px;
-    }
-
-    .logout {
-      background: #dc2626;
-      margin-top: 20px;
-    }
-  </style>
+.card{
+  background:#1f2933;
+  padding:15px;
+  border-radius:8px;
+  margin:10px 0;
+}
+</style>
 </head>
+
 <body>
 
 <!-- LOGIN PAGE -->
-<div id="loginPage">
-  <div class="container">
-    <h1>Explore</h1>
-    <input id="phone" placeholder="Phone number">
-    <input id="password" type="password" placeholder="Password">
-    <button onclick="login()">Login</button>
-  </div>
+<div id="loginPage" class="container">
+  <h1>Explore</h1>
+  <input id="phone" placeholder="Phone">
+  <input id="password" type="password" placeholder="Password">
+  <button onclick="login()">Login</button>
+
+  <div class="link" onclick="showAdmin()">Login as Admin</div>
 </div>
 
-<!-- DASHBOARD -->
-<div id="dashboard">
+<!-- ADMIN LOGIN -->
+<div id="adminLogin" class="container hidden">
+  <h1>Admin Login</h1>
+  <input id="adminUser" placeholder="Admin ID">
+  <input id="adminPass" type="password" placeholder="Password">
+  <button onclick="adminLogin()">Login</button>
+
+  <div class="link" onclick="backToUser()">Back to User</div>
+</div>
+
+<!-- USER DASHBOARD -->
+<div id="dashboard" class="container hidden">
   <h1>Dashboard</h1>
 
   <div class="card">
@@ -94,26 +103,58 @@
     <h2 id="income">NPR 300</h2>
   </div>
 
-  <button class="logout" onclick="logout()">Logout</button>
+  <button onclick="logout()">Logout</button>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="adminPanel" class="container hidden">
+  <h1>Admin Panel</h1>
+
+  <div class="card">
+    <p>Total Users</p>
+    <h2>1</h2>
+  </div>
+
+  <div class="card">
+    <p>Total Balance</p>
+    <h2>NPR 300</h2>
+  </div>
+
+  <button onclick="logout()">Logout</button>
 </div>
 
 <script>
- function login() {
-  document.getElementById("loginPage").style.display = "none";
-  document.getElementById("dashboard").style.display = "block";
+function login(){
+  document.getElementById("loginPage").classList.add("hidden");
+  document.getElementById("dashboard").classList.remove("hidden");
 }
 
-function adminLogin() {
-  const adminUser = document.getElementById("adminUser").value;
-  const adminPass = document.getElementById("adminPass").value;
+function showAdmin(){
+  document.getElementById("loginPage").classList.add("hidden");
+  document.getElementById("adminLogin").classList.remove("hidden");
+}
 
-  if (adminUser === "admin" && adminPass === "admin123") {
-    document.getElementById("loginPage").style.display = "none";
-    document.getElementById("adminPanel").style.display = "block";
-  } else {
+function backToUser(){
+  document.getElementById("adminLogin").classList.add("hidden");
+  document.getElementById("loginPage").classList.remove("hidden");
+}
+
+function adminLogin(){
+  const u = document.getElementById("adminUser").value;
+  const p = document.getElementById("adminPass").value;
+
+  if(u==="admin" && p==="admin123"){
+    document.getElementById("adminLogin").classList.add("hidden");
+    document.getElementById("adminPanel").classList.remove("hidden");
+  }else{
     alert("Wrong admin credentials");
   }
 }
+
+function logout(){
+  location.reload();
+}
 </script>
+
 </body>
 </html>
