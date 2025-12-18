@@ -76,7 +76,19 @@ button{
   <input id="password" type="password" placeholder="Password">
   <button onclick="login()">Login</button>
 
-  <div class="link" onclick="showAdmin()">Login as Admin</div>
+  <div class="link" onclick="showRegister()">Register</div>
+  <div class="link" onclick="showAdmin()">Admin Login</div>
+</div>
+
+<!-- REGISTER PAGE -->
+<div id="registerPage" class="container hidden">
+  <h1>Register</h1>
+  <input placeholder="Full Name">
+  <input placeholder="Phone">
+  <input type="password" placeholder="Password">
+  <button onclick="register()">Create Account</button>
+
+  <div class="link" onclick="backToLogin()">Back to Login</div>
 </div>
 
 <!-- ADMIN LOGIN -->
@@ -86,7 +98,7 @@ button{
   <input id="adminPass" type="password" placeholder="Password">
   <button onclick="adminLogin()">Login</button>
 
-  <div class="link" onclick="backToUser()">Back to User</div>
+  <div class="link" onclick="backToLogin()">Back</div>
 </div>
 
 <!-- USER DASHBOARD -->
@@ -95,12 +107,12 @@ button{
 
   <div class="card">
     <p>Balance</p>
-    <h2 id="balance">NPR 300</h2>
+    <h2>NPR 300</h2>
   </div>
 
   <div class="card">
     <p>Total Income</p>
-    <h2 id="income">NPR 300</h2>
+    <h2>NPR 300</h2>
   </div>
 
   <button onclick="logout()">Logout</button>
@@ -129,19 +141,30 @@ function login(){
   document.getElementById("dashboard").classList.remove("hidden");
 }
 
+function showRegister(){
+  document.getElementById("loginPage").classList.add("hidden");
+  document.getElementById("registerPage").classList.remove("hidden");
+}
+
+function register(){
+  alert("Registered successfully (demo)");
+  backToLogin();
+}
+
 function showAdmin(){
   document.getElementById("loginPage").classList.add("hidden");
   document.getElementById("adminLogin").classList.remove("hidden");
 }
 
-function backToUser(){
+function backToLogin(){
+  document.getElementById("registerPage").classList.add("hidden");
   document.getElementById("adminLogin").classList.add("hidden");
   document.getElementById("loginPage").classList.remove("hidden");
 }
 
 function adminLogin(){
-  const u = document.getElementById("adminUser").value;
-  const p = document.getElementById("adminPass").value;
+  const u=document.getElementById("adminUser").value;
+  const p=document.getElementById("adminPass").value;
 
   if(u==="admin" && p==="admin123"){
     document.getElementById("adminLogin").classList.add("hidden");
