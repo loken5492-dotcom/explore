@@ -6,128 +6,197 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+*{
+  box-sizing:border-box;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+}
+
 body{
   margin:0;
-  font-family:Arial, sans-serif;
-  background:#0f172a;
-  color:white;
+  min-height:100vh;
+  background:#020617;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#e5e7eb;
 }
 
-.container{
-  max-width:400px;
-  margin:60px auto;
-  background:#111827;
-  padding:25px;
-  border-radius:10px;
+.hidden{display:none}
+
+/* CARD */
+.card{
+  width:100%;
+  max-width:380px;
+  background:#020617;
+  border:1px solid #1e293b;
+  border-radius:14px;
+  padding:26px;
+  animation:fade .4s ease;
 }
 
-h1{
+@keyframes fade{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:none}
+}
+
+.logo{
   text-align:center;
-  margin-bottom:20px;
+  font-size:28px;
+  font-weight:700;
+}
+
+.sub{
+  text-align:center;
+  font-size:14px;
+  color:#94a3b8;
+  margin-bottom:22px;
 }
 
 input{
   width:100%;
-  padding:12px;
-  margin:8px 0;
-  border-radius:6px;
-  border:none;
+  padding:14px;
+  margin-bottom:14px;
+  background:#020617;
+  border:1px solid #1e293b;
+  border-radius:10px;
+  color:white;
+}
+
+input:focus{
   outline:none;
+  border-color:#22c55e;
 }
 
 button{
   width:100%;
-  padding:12px;
+  padding:14px;
   background:#22c55e;
-  color:black;
   border:none;
-  border-radius:6px;
-  font-weight:bold;
+  border-radius:10px;
+  font-size:15px;
+  font-weight:600;
   cursor:pointer;
-  margin-top:10px;
+  color:#022c22;
 }
 
-.link{
+.links{
+  margin-top:16px;
   text-align:center;
-  margin-top:10px;
+  font-size:14px;
+  color:#94a3b8;
+}
+.links span{
   color:#38bdf8;
   cursor:pointer;
 }
 
-.hidden{
-  display:none;
+/* DASHBOARD */
+.stat{
+  background:#020617;
+  border:1px solid #1e293b;
+  border-radius:12px;
+  padding:18px;
+  margin-bottom:14px;
+}
+.stat p{
+  margin:0;
+  font-size:13px;
+  color:#94a3b8;
+}
+.stat h2{
+  margin:6px 0 0;
+  font-size:22px;
 }
 
-.card{
-  background:#1f2933;
-  padding:15px;
-  border-radius:8px;
-  margin:10px 0;
+.footer{
+  margin-top:20px;
+  text-align:center;
+  font-size:12px;
+  color:#475569;
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN PAGE -->
-<div id="loginPage" class="container">
-  <h1>Explore</h1>
-  <input id="phone" placeholder="Phone">
-  <input id="password" type="password" placeholder="Password">
-  <button onclick="login()">Login</button>
+<!-- LOGIN -->
+<div class="card" id="login">
+  <div class="logo">Explore</div>
+  <div class="sub">Login to your account</div>
 
-  <div class="link" onclick="showRegister()">Register</div>
-  <div class="link" onclick="showAdmin()">Admin Login</div>
-</div>
-
-<!-- REGISTER PAGE -->
-<div id="registerPage" class="container hidden">
-  <h1>Register</h1>
-  <input placeholder="Full Name">
-  <input placeholder="Phone">
+  <input placeholder="Phone number">
   <input type="password" placeholder="Password">
-  <button onclick="register()">Create Account</button>
 
-  <div class="link" onclick="backToLogin()">Back to Login</div>
+  <button onclick="userLogin()">Login</button>
+
+  <div class="links">
+    <span onclick="showRegister()">Register</span> ·
+    <span onclick="showAdmin()">Admin</span>
+  </div>
+
+  <div class="footer">© 2025 Explore</div>
 </div>
 
-<!-- ADMIN LOGIN -->
-<div id="adminLogin" class="container hidden">
-  <h1>Admin Login</h1>
-  <input id="adminUser" placeholder="Admin ID">
-  <input id="adminPass" type="password" placeholder="Password">
-  <button onclick="adminLogin()">Login</button>
+<!-- REGISTER -->
+<div class="card hidden" id="register">
+  <div class="logo">Explore</div>
+  <div class="sub">Create account</div>
 
-  <div class="link" onclick="backToLogin()">Back</div>
+  <input placeholder="Full name">
+  <input placeholder="Phone number">
+  <input type="password" placeholder="Password">
+
+  <button onclick="backLogin()">Create Account</button>
+
+  <div class="links">
+    <span onclick="backLogin()">Back to login</span>
+  </div>
 </div>
 
 <!-- USER DASHBOARD -->
-<div id="dashboard" class="container hidden">
-  <h1>Dashboard</h1>
+<div class="card hidden" id="dashboard">
+  <div class="logo">Dashboard</div>
+  <div class="sub">Investment overview</div>
 
-  <div class="card">
-    <p>Balance</p>
+  <div class="stat">
+    <p>Total Balance</p>
     <h2>NPR 300</h2>
   </div>
 
-  <div class="card">
+  <div class="stat">
     <p>Total Income</p>
-    <h2>NPR 300</h2>
+    <h2>NPR 120</h2>
   </div>
 
   <button onclick="logout()">Logout</button>
 </div>
 
-<!-- ADMIN PANEL -->
-<div id="adminPanel" class="container hidden">
-  <h1>Admin Panel</h1>
+<!-- ADMIN LOGIN -->
+<div class="card hidden" id="adminLogin">
+  <div class="logo">Admin</div>
+  <div class="sub">Restricted access</div>
 
-  <div class="card">
+  <input id="adminUser" placeholder="Admin ID">
+  <input id="adminPass" type="password" placeholder="Password">
+
+  <button onclick="adminLogin()">Login</button>
+
+  <div class="links">
+    <span onclick="backLogin()">Back</span>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="card hidden" id="adminPanel">
+  <div class="logo">Admin Panel</div>
+  <div class="sub">Platform stats</div>
+
+  <div class="stat">
     <p>Total Users</p>
     <h2>1</h2>
   </div>
 
-  <div class="card">
+  <div class="stat">
     <p>Total Balance</p>
     <h2>NPR 300</h2>
   </div>
@@ -136,39 +205,39 @@ button{
 </div>
 
 <script>
-function login(){
-  document.getElementById("loginPage").classList.add("hidden");
-  document.getElementById("dashboard").classList.remove("hidden");
+const login=document.getElementById("login");
+const register=document.getElementById("register");
+const dashboard=document.getElementById("dashboard");
+const adminLoginBox=document.getElementById("adminLogin");
+const adminPanel=document.getElementById("adminPanel");
+
+function userLogin(){
+  login.classList.add("hidden");
+  dashboard.classList.remove("hidden");
 }
 
 function showRegister(){
-  document.getElementById("loginPage").classList.add("hidden");
-  document.getElementById("registerPage").classList.remove("hidden");
-}
-
-function register(){
-  alert("Registered successfully (demo)");
-  backToLogin();
+  login.classList.add("hidden");
+  register.classList.remove("hidden");
 }
 
 function showAdmin(){
-  document.getElementById("loginPage").classList.add("hidden");
-  document.getElementById("adminLogin").classList.remove("hidden");
+  login.classList.add("hidden");
+  adminLoginBox.classList.remove("hidden");
 }
 
-function backToLogin(){
-  document.getElementById("registerPage").classList.add("hidden");
-  document.getElementById("adminLogin").classList.add("hidden");
-  document.getElementById("loginPage").classList.remove("hidden");
+function backLogin(){
+  register.classList.add("hidden");
+  adminLoginBox.classList.add("hidden");
+  login.classList.remove("hidden");
 }
 
 function adminLogin(){
   const u=document.getElementById("adminUser").value;
   const p=document.getElementById("adminPass").value;
-
   if(u==="admin" && p==="admin123"){
-    document.getElementById("adminLogin").classList.add("hidden");
-    document.getElementById("adminPanel").classList.remove("hidden");
+    adminLoginBox.classList.add("hidden");
+    adminPanel.classList.remove("hidden");
   }else{
     alert("Wrong admin credentials");
   }
