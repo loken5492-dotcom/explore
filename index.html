@@ -98,16 +98,22 @@
 </div>
 
 <script>
-  function login() {
+ function login() {
+  document.getElementById("loginPage").style.display = "none";
+  document.getElementById("dashboard").style.display = "block";
+}
+
+function adminLogin() {
+  const adminUser = document.getElementById("adminUser").value;
+  const adminPass = document.getElementById("adminPass").value;
+
+  if (adminUser === "admin" && adminPass === "admin123") {
     document.getElementById("loginPage").style.display = "none";
-    document.getElementById("dashboard").style.display = "block";
+    document.getElementById("adminPanel").style.display = "block";
+  } else {
+    alert("Wrong admin credentials");
   }
-
-  function logout() {
-    document.getElementById("dashboard").style.display = "none";
-    document.getElementById("loginPage").style.display = "block";
-  }
+}
 </script>
-
 </body>
 </html>
