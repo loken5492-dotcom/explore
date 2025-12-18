@@ -2,89 +2,68 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>Explore Investment Demo</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Explore – Login</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  font-family:Arial,Helvetica,sans-serif;
-}
+*{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
 body{
   margin:0;
-  background:linear-gradient(120deg,#0f2027,#203a43,#2c5364);
-  color:#fff;
   min-height:100vh;
+  background:#020617;
   display:flex;
   align-items:center;
   justify-content:center;
+  color:#e5e7eb;
 }
-.card{
-  background:#111;
+.box{
   width:100%;
-  max-width:360px;
-  padding:25px;
-  border-radius:12px;
-  box-shadow:0 0 20px rgba(0,255,0,.2);
+  max-width:380px;
+  background:#020617;
+  border:1px solid #1e293b;
+  border-radius:14px;
+  padding:26px;
 }
-h1{
-  text-align:center;
-  margin-bottom:5px;
-}
-p{
-  text-align:center;
-  color:#aaa;
-  font-size:14px;
-}
+h1{text-align:center;margin:0}
+p{text-align:center;color:#94a3b8;font-size:14px}
 input{
   width:100%;
-  padding:12px;
+  padding:13px;
   margin-top:12px;
-  background:#000;
-  border:1px solid #00ff99;
-  border-radius:8px;
-  color:#0f0;
-  font-size:15px;
+  background:#020617;
+  border:1px solid #1e293b;
+  border-radius:10px;
+  color:white;
 }
 button{
   width:100%;
-  padding:12px;
-  margin-top:15px;
-  background:#00ff99;
+  padding:13px;
+  margin-top:16px;
+  background:#22c55e;
   border:none;
-  border-radius:8px;
-  font-size:16px;
+  border-radius:10px;
+  font-size:15px;
+  font-weight:600;
   cursor:pointer;
 }
-button:hover{
-  opacity:.8;
-}
-.link{
-  text-align:center;
+.link{text-align:center;margin-top:14px;font-size:14px}
+.link span{color:#38bdf8;cursor:pointer}
+.hidden{display:none}
+.stat{
+  border:1px solid #1e293b;
+  border-radius:12px;
+  padding:16px;
   margin-top:12px;
-  font-size:14px;
 }
-.link a{
-  color:#00ff99;
-  text-decoration:none;
-  cursor:pointer;
-}
-.hidden{
-  display:none;
-}
-.footer{
-  text-align:center;
-  margin-top:15px;
-  font-size:12px;
-  color:#666;
-}
+.stat h2{margin:4px 0 0}
+.footer{text-align:center;font-size:12px;color:#475569;margin-top:16px}
 </style>
 </head>
 
 <body>
 
 <!-- LOGIN -->
-<div class="card" id="loginPage">
+<div class="box" id="login">
   <h1>Explore</h1>
   <p>Login to your account</p>
 
@@ -93,89 +72,101 @@ button:hover{
   <button onclick="login()">Login</button>
 
   <div class="link">
-    <a onclick="showRegister()">Register</a> ·
-    <a onclick="showAdmin()">Admin</a>
+    <span onclick="showRegister()">Register</span> ·
+    <span onclick="showAdmin()">Admin</span>
   </div>
-  <div class="footer">© 2025 Explore</div>
+  <div class="footer">Demo platform</div>
 </div>
 
 <!-- REGISTER -->
-<div class="card hidden" id="registerPage">
+<div class="box hidden" id="register">
   <h1>Register</h1>
-  <p>Create new account</p>
+  <p>Create demo account</p>
 
   <input placeholder="Phone number">
   <input type="password" placeholder="Password">
   <button onclick="backLogin()">Register</button>
 
   <div class="link">
-    <a onclick="backLogin()">Back to Login</a>
-  </div>
-</div>
-
-<!-- ADMIN LOGIN -->
-<div class="card hidden" id="adminPage">
-  <h1>Admin Login</h1>
-
-  <input id="adminUser" placeholder="Admin ID">
-  <input id="adminPass" type="password" placeholder="Admin Password">
-  <button onclick="adminLogin()">Login</button>
-
-  <div class="link">
-    <a onclick="backLogin()">Back</a>
+    <span onclick="backLogin()">Back to login</span>
   </div>
 </div>
 
 <!-- DASHBOARD -->
-<div class="card hidden" id="dashboard">
+<div class="box hidden" id="dashboard">
   <h1>Dashboard</h1>
-  <p>Welcome to Explore</p>
+  <p>Your investment summary</p>
 
-  <p><b>Balance:</b> NPR 300</p>
-  <p><b>Total Income:</b> NPR 300</p>
+  <div class="stat">
+    <p>Total Balance</p>
+    <h2>NPR 300</h2>
+  </div>
+
+  <div class="stat">
+    <p>Total Income</p>
+    <h2>NPR 120</h2>
+  </div>
+
+  <button onclick="logout()">Logout</button>
+</div>
+
+<!-- ADMIN LOGIN -->
+<div class="box hidden" id="adminLogin">
+  <h1>Admin Login</h1>
+
+  <input id="adminUser" placeholder="Admin ID">
+  <input id="adminPass" type="password" placeholder="Password">
+  <button onclick="adminLogin()">Login</button>
+
+  <div class="link">
+    <span onclick="backLogin()">Back</span>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="box hidden" id="adminPanel">
+  <h1>Admin Panel</h1>
+  <p>Demo control</p>
+
+  <div class="stat">
+    <p>Total Users</p>
+    <h2>1</h2>
+  </div>
+
+  <div class="stat">
+    <p>Total Platform Balance</p>
+    <h2>NPR 300</h2>
+  </div>
 
   <button onclick="logout()">Logout</button>
 </div>
 
 <script>
-function showRegister(){
-  hideAll();
-  document.getElementById("registerPage").style.display="block";
-}
-function showAdmin(){
-  hideAll();
-  document.getElementById("adminPage").style.display="block";
-}
-function backLogin(){
-  hideAll();
-  document.getElementById("loginPage").style.display="block";
-}
 function hideAll(){
-  document.querySelectorAll(".card").forEach(c=>c.style.display="none");
+  document.querySelectorAll(".box").forEach(b=>b.classList.add("hidden"));
 }
 function login(){
   const p=document.getElementById("loginPhone").value;
   const pw=document.getElementById("loginPass").value;
-  if(p==="9999999999" && pw==="1234"){
+  if(p==="9800000000" && pw==="1234"){
     hideAll();
-    document.getElementById("dashboard").style.display="block";
+    dashboard.classList.remove("hidden");
   }else{
-    alert("Wrong login details");
+    alert("Wrong demo login");
   }
 }
+function showRegister(){hideAll();register.classList.remove("hidden")}
+function showAdmin(){hideAll();adminLogin.classList.remove("hidden")}
+function backLogin(){hideAll();login.classList.remove("hidden")}
 function adminLogin(){
-  const u=document.getElementById("adminUser").value;
-  const p=document.getElementById("adminPass").value;
-  if(u==="admin" && p==="admin123"){
+  if(adminUser.value==="admin" && adminPass.value==="admin123"){
     hideAll();
-    document.getElementById("dashboard").style.display="block";
+    adminPanel.classList.remove("hidden");
   }else{
-    alert("Wrong admin credentials");
+    alert("Wrong admin login");
   }
 }
-function logout(){
-  backLogin();
-}
+function logout(){location.reload()}
 </script>
 
 </body>
