@@ -2,254 +2,181 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Explore</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Explore – Login</title>
 
 <style>
 *{
   box-sizing:border-box;
-  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+  font-family:Arial,Helvetica,sans-serif;
 }
-
 body{
   margin:0;
+  background:linear-gradient(120deg,#0f2027,#203a43,#2c5364);
+  color:#fff;
   min-height:100vh;
-  background:#020617;
   display:flex;
   align-items:center;
   justify-content:center;
-  color:#e5e7eb;
 }
-
-.hidden{display:none}
-
-/* CARD */
 .card{
+  background:#111;
   width:100%;
-  max-width:380px;
-  background:#020617;
-  border:1px solid #1e293b;
-  border-radius:14px;
-  padding:26px;
-  animation:fade .4s ease;
+  max-width:360px;
+  padding:25px;
+  border-radius:12px;
+  box-shadow:0 0 20px rgba(0,255,0,.2);
 }
-
-@keyframes fade{
-  from{opacity:0;transform:translateY(10px)}
-  to{opacity:1;transform:none}
-}
-
-.logo{
+h1{
   text-align:center;
-  font-size:28px;
-  font-weight:700;
+  margin-bottom:5px;
 }
-
-.sub{
+p{
   text-align:center;
+  color:#aaa;
   font-size:14px;
-  color:#94a3b8;
-  margin-bottom:22px;
 }
-
 input{
   width:100%;
-  padding:14px;
-  margin-bottom:14px;
-  background:#020617;
-  border:1px solid #1e293b;
-  border-radius:10px;
-  color:white;
+  padding:12px;
+  margin-top:12px;
+  background:#000;
+  border:1px solid #00ff99;
+  border-radius:8px;
+  color:#0f0;
+  font-size:15px;
 }
-
-input:focus{
-  outline:none;
-  border-color:#22c55e;
-}
-
 button{
   width:100%;
-  padding:14px;
-  background:#22c55e;
+  padding:12px;
+  margin-top:15px;
+  background:#00ff99;
   border:none;
-  border-radius:10px;
-  font-size:15px;
-  font-weight:600;
+  border-radius:8px;
+  font-size:16px;
   cursor:pointer;
-  color:#022c22;
 }
-
-.links{
-  margin-top:16px;
+button:hover{
+  opacity:.8;
+}
+.link{
   text-align:center;
+  margin-top:12px;
   font-size:14px;
-  color:#94a3b8;
 }
-.links span{
-  color:#38bdf8;
+.link a{
+  color:#00ff99;
+  text-decoration:none;
   cursor:pointer;
 }
-
-/* DASHBOARD */
-.stat{
-  background:#020617;
-  border:1px solid #1e293b;
-  border-radius:12px;
-  padding:18px;
-  margin-bottom:14px;
+.hidden{
+  display:none;
 }
-.stat p{
-  margin:0;
-  font-size:13px;
-  color:#94a3b8;
-}
-.stat h2{
-  margin:6px 0 0;
-  font-size:22px;
-}
-
 .footer{
-  margin-top:20px;
   text-align:center;
+  margin-top:15px;
   font-size:12px;
-  color:#475569;
+  color:#666;
 }
 </style>
 </head>
 
 <body>
 
-  <h1 style="color:red;text-align:center;">TEST DESIGN</h1>
-  
 <!-- LOGIN -->
-<div class="card" id="login">
-  <div class="logo">Explore</div>
-  <div class="sub">Login to your account</div>
+<div class="card" id="loginPage">
+  <h1>Explore</h1>
+  <p>Login to your account</p>
 
-  <input placeholder="Phone number">
-  <input type="password" placeholder="Password">
+  <input id="loginPhone" placeholder="Phone number">
+  <input id="loginPass" type="password" placeholder="Password">
+  <button onclick="login()">Login</button>
 
-  <button onclick="userLogin()">Login</button>
-
-  <div class="links">
-    <span onclick="showRegister()">Register</span> ·
-    <span onclick="showAdmin()">Admin</span>
+  <div class="link">
+    <a onclick="showRegister()">Register</a> ·
+    <a onclick="showAdmin()">Admin</a>
   </div>
-
   <div class="footer">© 2025 Explore</div>
 </div>
 
 <!-- REGISTER -->
-<div class="card hidden" id="register">
-  <div class="logo">Explore</div>
-  <div class="sub">Create account</div>
+<div class="card hidden" id="registerPage">
+  <h1>Register</h1>
+  <p>Create new account</p>
 
-  <input placeholder="Full name">
   <input placeholder="Phone number">
   <input type="password" placeholder="Password">
+  <button onclick="backLogin()">Register</button>
 
-  <button onclick="backLogin()">Create Account</button>
-
-  <div class="links">
-    <span onclick="backLogin()">Back to login</span>
+  <div class="link">
+    <a onclick="backLogin()">Back to Login</a>
   </div>
-</div>
-
-<!-- USER DASHBOARD -->
-<div class="card hidden" id="dashboard">
-  <div class="logo">Dashboard</div>
-  <div class="sub">Investment overview</div>
-
-  <div class="stat">
-    <p>Total Balance</p>
-    <h2>NPR 300</h2>
-  </div>
-
-  <div class="stat">
-    <p>Total Income</p>
-    <h2>NPR 120</h2>
-  </div>
-
-  <button onclick="logout()">Logout</button>
 </div>
 
 <!-- ADMIN LOGIN -->
-<div class="card hidden" id="adminLogin">
-  <div class="logo">Admin</div>
-  <div class="sub">Restricted access</div>
+<div class="card hidden" id="adminPage">
+  <h1>Admin Login</h1>
 
   <input id="adminUser" placeholder="Admin ID">
-  <input id="adminPass" type="password" placeholder="Password">
-
+  <input id="adminPass" type="password" placeholder="Admin Password">
   <button onclick="adminLogin()">Login</button>
 
-  <div class="links">
-    <span onclick="backLogin()">Back</span>
+  <div class="link">
+    <a onclick="backLogin()">Back</a>
   </div>
 </div>
 
-<!-- ADMIN PANEL -->
-<div class="card hidden" id="adminPanel">
-  <div class="logo">Admin Panel</div>
-  <div class="sub">Platform stats</div>
+<!-- DASHBOARD -->
+<div class="card hidden" id="dashboard">
+  <h1>Dashboard</h1>
+  <p>Welcome to Explore</p>
 
-  <div class="stat">
-    <p>Total Users</p>
-    <h2>1</h2>
-  </div>
-
-  <div class="stat">
-    <p>Total Balance</p>
-    <h2>NPR 300</h2>
-  </div>
+  <p><b>Balance:</b> NPR 300</p>
+  <p><b>Total Income:</b> NPR 300</p>
 
   <button onclick="logout()">Logout</button>
 </div>
 
 <script>
-const login=document.getElementById("login");
-const register=document.getElementById("register");
-const dashboard=document.getElementById("dashboard");
-const adminLoginBox=document.getElementById("adminLogin");
-const adminPanel=document.getElementById("adminPanel");
-
-function userLogin(){
-  login.classList.add("hidden");
-  dashboard.classList.remove("hidden");
-}
-
 function showRegister(){
-  login.classList.add("hidden");
-  register.classList.remove("hidden");
+  hideAll();
+  document.getElementById("registerPage").style.display="block";
 }
-
 function showAdmin(){
-  login.classList.add("hidden");
-  adminLoginBox.classList.remove("hidden");
+  hideAll();
+  document.getElementById("adminPage").style.display="block";
 }
-
 function backLogin(){
-  register.classList.add("hidden");
-  adminLoginBox.classList.add("hidden");
-  login.classList.remove("hidden");
+  hideAll();
+  document.getElementById("loginPage").style.display="block";
 }
-
+function hideAll(){
+  document.querySelectorAll(".card").forEach(c=>c.style.display="none");
+}
+function login(){
+  const p=document.getElementById("loginPhone").value;
+  const pw=document.getElementById("loginPass").value;
+  if(p==="9999999999" && pw==="1234"){
+    hideAll();
+    document.getElementById("dashboard").style.display="block";
+  }else{
+    alert("Wrong login details");
+  }
+}
 function adminLogin(){
   const u=document.getElementById("adminUser").value;
   const p=document.getElementById("adminPass").value;
   if(u==="admin" && p==="admin123"){
-    adminLoginBox.classList.add("hidden");
-    adminPanel.classList.remove("hidden");
+    hideAll();
+    document.getElementById("dashboard").style.display="block";
   }else{
     alert("Wrong admin credentials");
   }
 }
-
 function logout(){
-  location.reload();
+  backLogin();
 }
 </script>
 
 </body>
 </html>
-
