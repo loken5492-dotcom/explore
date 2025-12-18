@@ -2,68 +2,89 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Explore Investment Demo</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Explore – Login</title>
 
 <style>
-*{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+*{
+  box-sizing:border-box;
+  font-family:Arial,Helvetica,sans-serif;
+}
 body{
   margin:0;
+  background:linear-gradient(120deg,#0f2027,#203a43,#2c5364);
+  color:#fff;
   min-height:100vh;
-  background:#020617;
   display:flex;
   align-items:center;
   justify-content:center;
-  color:#e5e7eb;
 }
-.box{
+.card{
+  background:#111;
   width:100%;
-  max-width:380px;
-  background:#020617;
-  border:1px solid #1e293b;
-  border-radius:14px;
-  padding:26px;
+  max-width:360px;
+  padding:25px;
+  border-radius:12px;
+  box-shadow:0 0 20px rgba(0,255,0,.2);
 }
-h1{text-align:center;margin:0}
-p{text-align:center;color:#94a3b8;font-size:14px}
+h1{
+  text-align:center;
+  margin-bottom:5px;
+}
+p{
+  text-align:center;
+  color:#aaa;
+  font-size:14px;
+}
 input{
   width:100%;
-  padding:13px;
+  padding:12px;
   margin-top:12px;
-  background:#020617;
-  border:1px solid #1e293b;
-  border-radius:10px;
-  color:white;
+  background:#000;
+  border:1px solid #00ff99;
+  border-radius:8px;
+  color:#0f0;
+  font-size:15px;
 }
 button{
   width:100%;
-  padding:13px;
-  margin-top:16px;
-  background:#22c55e;
+  padding:12px;
+  margin-top:15px;
+  background:#00ff99;
   border:none;
-  border-radius:10px;
-  font-size:15px;
-  font-weight:600;
+  border-radius:8px;
+  font-size:16px;
   cursor:pointer;
 }
-.link{text-align:center;margin-top:14px;font-size:14px}
-.link span{color:#38bdf8;cursor:pointer}
-.hidden{display:none}
-.stat{
-  border:1px solid #1e293b;
-  border-radius:12px;
-  padding:16px;
-  margin-top:12px;
+button:hover{
+  opacity:.8;
 }
-.stat h2{margin:4px 0 0}
-.footer{text-align:center;font-size:12px;color:#475569;margin-top:16px}
+.link{
+  text-align:center;
+  margin-top:12px;
+  font-size:14px;
+}
+.link a{
+  color:#00ff99;
+  text-decoration:none;
+  cursor:pointer;
+}
+.hidden{
+  display:none;
+}
+.footer{
+  text-align:center;
+  margin-top:15px;
+  font-size:12px;
+  color:#666;
+}
 </style>
 </head>
 
 <body>
 
 <!-- LOGIN -->
-<div class="box" id="login">
+<div class="card" id="loginPage">
   <h1>Explore</h1>
   <p>Login to your account</p>
 
@@ -72,102 +93,103 @@ button{
   <button onclick="login()">Login</button>
 
   <div class="link">
-    <span onclick="showRegister()">Register</span> ·
-    <span onclick="showAdmin()">Admin</span>
+    <a onclick="showRegister()">Register</a> ·
+    <a onclick="showAdmin()">Admin</a>
   </div>
-  <div class="footer">Demo platform</div>
+  <div class="footer">© 2025 Explore</div>
 </div>
 
 <!-- REGISTER -->
-<div class="box hidden" id="register">
+<div class="card hidden" id="registerPage">
   <h1>Register</h1>
-  <p>Create demo account</p>
+  <p>Create new account</p>
 
   <input placeholder="Phone number">
   <input type="password" placeholder="Password">
   <button onclick="backLogin()">Register</button>
 
   <div class="link">
-    <span onclick="backLogin()">Back to login</span>
+    <a onclick="backLogin()">Back to Login</a>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN -->
+<div class="card hidden" id="adminPage">
+  <h1>Admin Login</h1>
+
+  <input id="adminUser" placeholder="Admin ID">
+  <input id="adminPass" type="password" placeholder="Admin Password">
+  <button onclick="adminLogin()">Login</button>
+
+  <div class="link">
+    <a onclick="backLogin()">Back</a>
   </div>
 </div>
 
 <!-- DASHBOARD -->
-<div class="box hidden" id="dashboard">
+<div class="card hidden" id="dashboard">
   <h1>Dashboard</h1>
-  <p>Your investment summary</p>
+  <p>Welcome to Explore</p>
 
-  <div class="stat">
-    <p>Total Balance</p>
-    <h2>NPR 300</h2>
-  </div>
-
-  <div class="stat">
-    <p>Total Income</p>
-    <h2>NPR 120</h2>
-  </div>
-
-  <button onclick="logout()">Logout</button>
-</div>
-
-<!-- ADMIN LOGIN -->
-<div class="box hidden" id="adminLogin">
-  <h1>Admin Login</h1>
-
-  <input id="adminUser" placeholder="Admin ID">
-  <input id="adminPass" type="password" placeholder="Password">
-  <button onclick="adminLogin()">Login</button>
-
-  <div class="link">
-    <span onclick="backLogin()">Back</span>
-  </div>
-</div>
-
-<!-- ADMIN PANEL -->
-<div class="box hidden" id="adminPanel">
-  <h1>Admin Panel</h1>
-  <p>Demo control</p>
-
-  <div class="stat">
-    <p>Total Users</p>
-    <h2>1</h2>
-  </div>
-
-  <div class="stat">
-    <p>Total Platform Balance</p>
-    <h2>NPR 300</h2>
-  </div>
+  <p><b>Balance:</b> NPR 300</p>
+  <p><b>Total Income:</b> NPR 300</p>
 
   <button onclick="logout()">Logout</button>
 </div>
 
 <script>
+function showRegister(){
+  hideAll();
+  document.getElementById("registerPage").style.display="block";
+}
+function showAdmin(){
+  hideAll();
+  document.getElementById("adminPage").style.display="block";
+}
+function backLogin(){
+  hideAll();
+  document.getElementById("loginPage").style.display="block";
+}
 function hideAll(){
-  document.querySelectorAll(".box").forEach(b=>b.classList.add("hidden"));
+  document.querySelectorAll(".card").forEach(c=>c.style.display="none");
 }
 function login(){
   const p=document.getElementById("loginPhone").value;
   const pw=document.getElementById("loginPass").value;
-  if(p==="9800000000" && pw==="1234"){
+  if(p==="9999999999" && pw==="1234"){
     hideAll();
-    dashboard.classList.remove("hidden");
+    document.getElementById("dashboard").style.display="block";
   }else{
-    alert("Wrong demo login");
+    alert("Wrong login details");
   }
 }
-function showRegister(){hideAll();register.classList.remove("hidden")}
-function showAdmin(){hideAll();adminLogin.classList.remove("hidden")}
-function backLogin(){hideAll();login.classList.remove("hidden")}
 function adminLogin(){
-  if(adminUser.value==="admin" && adminPass.value==="admin123"){
+  const u=document.getElementById("adminUser").value;
+  const p=document.getElementById("adminPass").value;
+  if(u==="admin" && p==="admin123"){
     hideAll();
-    adminPanel.classList.remove("hidden");
+    document.getElementById("dashboard").style.display="block";
   }else{
-    alert("Wrong admin login");
+    alert("Wrong admin credentials");
   }
 }
-function logout(){location.reload()}
+function logout(){
+  backLogin();
+}
 </script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 
+  const firebaseConfig = {
+    apiKey: "AIzaSyDAJcuTCO4Ebyg44Vg9okLzc7-b-hRLK",
+    authDomain: "explore-bb6c4.firebaseapp.com",
+    projectId: "explore-bb6c4",
+    storageBucket: "explore-bb6c4.firebasestorage.app",
+    messagingSenderId: "65794980722",
+    appId: "1:65794980722:web:3430b609e6c9323eb7beb"
+  };
+
+  initializeApp(firebaseConfig);
+</script>
 </body>
 </html>
