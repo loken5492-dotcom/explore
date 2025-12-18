@@ -69,7 +69,7 @@ a {
 <body>
 
 <!-- LOGIN -->
-<div id="login">
+<div id="loginPage">
   <div class="container">
   <h1>Explore</h1>
   <input id="phone" placeholder="Phone">
@@ -78,7 +78,7 @@ a {
 </div>
 
 <!-- DASHBOARD -->
-<div id="dashboard">
+<div id="dashboard" style="display:none;>
   <h1>Dashboard</h1>
   <div class="card">
     <p>Balance</p>
@@ -152,102 +152,35 @@ a {
 </div>
 
 <script>
-  let balance = 300;
-  let income = 300;
-  let dailyIncome = 0;
-  let platformActive = true;
-
-  const ADMIN_PHONE = "9999";
-  const ADMIN_PASS = "admin";
-
-  function hideAll() {
-    ["login","dashboard","products","withdraw","admin","control"]
-      .forEach(id => document.getElementById(id).style.display="none");
-    nav.style.display="none";
-  }
-
   function login() {
-    hideAll();
-    nav.style.display="flex";
-    if (phone.value === ADMIN_PHONE && password.value === ADMIN_PASS) {
-      admin.style.display="block";
+    const phone = document.getElementById("phone").value;
+    const password = document.getElementById("password").value;
+
+    if (phone === "" || password === "") {
+      alert("Please enter phone and password");
+      return;
+    }
+
+    // DEMO login (any value works)
+    document.getElementById("loginPage").style.display = "none";
+    document.getElementById("dashboard").style.display = "block";
+  }
+
+  function adminLogin() {
+    const adminUser = document.getElementById("adminUser").value;
+    const adminPass = document.getElementById("adminPass").value;
+
+    if (adminUser === "admin" && adminPass === "admin123") {
+      document.getElementById("loginPage").style.display = "none";
+      document.getElementById("adminPanel").style.display = "block";
     } else {
-      dashboard.style.display="block";
+      alert("Wrong admin credentials");
     }
   }
-
-  function show(id) {
-    hideAll();
-    document.getElementById(id).style.display="block";
-    nav.style.display="flex";
-  }
-
-  function buy(amount) {
-    if (!platformActive) {
-      alert("Platform disabled");
-      return;
-    }
-    dailyIncome += amount;
-    alert("Product purchased");
-  }
-
-  function withdraw() {
-    let amt = Number(withdrawAmount.value);
-    if (amt > balance) {
-      alert("Insufficient balance");
-      return;
-    }
-    balance -= amt;
-    updateUI();
-    alert("Withdraw request submitted");
-  }
-
-  function setBalance() {
-    balance = Number(adminBalance.value);
-    updateUI();
-  }
-
-  function setIncome() {
-    income = Number(adminIncome.value);
-    updateUI();
-  }
-
-  function addBonus() {
-    balance += 1000;
-    updateUI();
-  }
-
-  function resetUser() {
-    balance = 0;
-    income = 0;
-    dailyIncome = 0;
-    updateUI();
-  }
-
-  function togglePlatform() {
-    platformActive = !platformActive;
-    status.innerText = platformActive ? "ACTIVE" : "DISABLED";
-  }
-
-  function updateUI() {
-    balanceEl().innerText = "NPR " + balance;
-    incomeEl().innerText = "NPR " + income;
-  }
-
-  function balanceEl(){ return document.getElementById("balance"); }
-  function incomeEl(){ return document.getElementById("income"); }
-
-  /* AUTO DAILY INCOME (every 5 seconds for demo) */
-  setInterval(() => {
-    if (dailyIncome > 0 && platformActive) {
-      balance += dailyIncome;
-      income += dailyIncome;
-      updateUI();
-    }
-  }, 5000);
 </script>
 
 </body>
 </html>
+
 
 
