@@ -3,193 +3,110 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Explore – Login</title>
+<title>Login</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  font-family:Arial,Helvetica,sans-serif;
+body {
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
 }
-body{
-  margin:0;
-  background:linear-gradient(120deg,#0f2027,#203a43,#2c5364);
-  color:#fff;
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+
+.box {
+  background: #020617;
+  padding: 25px;
+  width: 320px;
+  border-radius: 10px;
+  color: white;
 }
-.card{
-  background:#111;
-  width:100%;
-  max-width:360px;
-  padding:25px;
-  border-radius:12px;
-  box-shadow:0 0 20px rgba(0,255,0,.2);
+
+h2 {
+  text-align: center;
 }
-h1{
-  text-align:center;
-  margin-bottom:5px;
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: none;
 }
-p{
-  text-align:center;
-  color:#aaa;
-  font-size:14px;
+
+button {
+  width: 100%;
+  padding: 10px;
+  background: #22c55e;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
 }
-input{
-  width:100%;
-  padding:12px;
-  margin-top:12px;
-  background:#000;
-  border:1px solid #00ff99;
-  border-radius:8px;
-  color:#0f0;
-  font-size:15px;
-}
-button{
-  width:100%;
-  padding:12px;
-  margin-top:15px;
-  background:#00ff99;
-  border:none;
-  border-radius:8px;
-  font-size:16px;
-  cursor:pointer;
-}
-button:hover{
-  opacity:.8;
-}
-.link{
-  text-align:center;
-  margin-top:12px;
-  font-size:14px;
-}
-.link a{
-  color:#00ff99;
-  text-decoration:none;
-  cursor:pointer;
-}
-.hidden{
-  display:none;
-}
-.footer{
-  text-align:center;
-  margin-top:15px;
-  font-size:12px;
-  color:#666;
+
+.link {
+  text-align: center;
+  margin-top: 10px;
+  cursor: pointer;
+  color: #38bdf8;
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
-<div class="card" id="loginPage">
-  <h1>Explore</h1>
-  <p>Login to your account</p>
+<div class="box">
+  <h2 id="title">Login</h2>
 
-  <input id="loginPhone" placeholder="Phone number">
-  <input id="loginPass" type="password" placeholder="Password">
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="Password">
+
   <button onclick="login()">Login</button>
 
-  <div class="link">
-    <a onclick="showRegister()">Register</a> ·
-    <a onclick="showAdmin()">Admin</a>
-  </div>
-  <div class="footer">© 2025 Explore</div>
+  <div class="link" onclick="toggle()">Create account</div>
 </div>
 
-<!-- REGISTER -->
-<div class="card hidden" id="registerPage">
-  <h1>Register</h1>
-  <p>Create new account</p>
-
-  <input placeholder="Phone number">
-  <input type="password" placeholder="Password">
-  <button onclick="backLogin()">Register</button>
-
-  <div class="link">
-    <a onclick="backLogin()">Back to Login</a>
-  </div>
-</div>
-
-<!-- ADMIN LOGIN -->
-<div class="card hidden" id="adminPage">
-  <h1>Admin Login</h1>
-
-  <input id="adminUser" placeholder="Admin ID">
-  <input id="adminPass" type="password" placeholder="Admin Password">
-  <button onclick="adminLogin()">Login</button>
-
-  <div class="link">
-    <a onclick="backLogin()">Back</a>
-  </div>
-</div>
-
-<!-- DASHBOARD -->
-<div class="card hidden" id="dashboard">
-  <h1>Dashboard</h1>
-  <p>Welcome to Explore</p>
-
-  <p><b>Balance:</b> NPR 300</p>
-  <p><b>Total Income:</b> NPR 300</p>
-
-  <button onclick="logout()">Logout</button>
-</div>
-
-<script>
-function showRegister(){
-  hideAll();
-  document.getElementById("registerPage").style.display="block";
-}
-function showAdmin(){
-  hideAll();
-  document.getElementById("adminPage").style.display="block";
-}
-function backLogin(){
-  hideAll();
-  document.getElementById("loginPage").style.display="block";
-}
-function hideAll(){
-  document.querySelectorAll(".card").forEach(c=>c.style.display="none");
-}
-function login(){
-  const p=document.getElementById("loginPhone").value;
-  const pw=document.getElementById("loginPass").value;
-  if(p==="9999999999" && pw==="1234"){
-    hideAll();
-    document.getElementById("dashboard").style.display="block";
-  }else{
-    alert("Wrong login details");
-  }
-}
-function adminLogin(){
-  const u=document.getElementById("adminUser").value;
-  const p=document.getElementById("adminPass").value;
-  if(u==="admin" && p==="admin123"){
-    hideAll();
-    document.getElementById("dashboard").style.display="block";
-  }else{
-    alert("Wrong admin credentials");
-  }
-}
-function logout(){
-  backLogin();
-}
-</script>
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyDAJcuTCO4Ebyg44Vg9okLzc7-b-hRLK",
-    authDomain: "explore-bb6c4.firebaseapp.com",
-    projectId: "explore-bb6c4",
-    storageBucket: "explore-bb6c4.firebasestorage.app",
-    messagingSenderId: "65794980722",
-    appId: "1:65794980722:web:3430b609e6c9323eb7beb"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyDAJcuTCO4Ebyg44Vg9okLzc7-b-hRLK",
+  authDomain: "explore-bb6c4.firebaseapp.com",
+  projectId: "explore-bb6c4",
+  storageBucket: "explore-bb6c4.firebasestorage.app",
+  messagingSenderId: "65794980722",
+  appId: "1:65794980722:web:3430b609e6c9323eb7beb"
+};
 
-  initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+let isLogin = true;
+
+window.toggle = function () {
+  isLogin = !isLogin;
+  document.getElementById("title").innerText = isLogin ? "Login" : "Register";
+  document.querySelector("button").innerText = isLogin ? "Login" : "Register";
+};
+
+window.login = function () {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  if (isLogin) {
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => alert("Login successful"))
+      .catch(e => alert(e.message));
+  } else {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => alert("Account created"))
+      .catch(e => alert(e.message));
+  }
+};
 </script>
+
 </body>
 </html>
